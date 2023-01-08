@@ -1,0 +1,24 @@
+<resources>
+    <string name="app_name">TheMovieApp</string>
+    <string name="lbl_discover">Discover</string>
+    <string name="lbl_search">Search</string>
+    <string name="lbl_best_popular_films_and_serial">BEST POPULAR FILMS AND SERIAL</string>
+    <string name="lbl_check_movie_show_time">Check Movie\nShowtimes</string>
+    <string name="lbl_see_more"><u>SEE MORE</u></string>
+    <string name="lbl_more_showcases"><u>MORE SHOWCASES</u></string>
+    <string name="lbl_showcases">SHOWCASES</string>
+    <string name="lbl_more_actors"><u>MORE ACTORS</u></string>
+    <string name="lbl_best_actors">BEST ACTORS</string>
+    <string name="lbl_storyline">STORYLINE</string>
+    <string name="lbl_rate_movie">RATE MOVIE</string>
+    <string name="lbl_play_trailer">PLAY TRAILER</string>
+    <string name="lbl_actors">ACTORS</string>
+    <string name="lbl_creators">CREATORS</string>
+    <string name="lbl_more_creators"><u>MORE CREATORS</u></string>
+    <string name="lbl_original_title">Original Title: </string>
+    <string name="lbl_type">Type:</string>
+    <string name="lbl_production">Production: </string>
+    <string name="lbl_premiere">Premiere:</string>
+    <string name="lbl_description">Description</string>
+    <string name="lbl_about_film">ABOUT FILM</string>
+</resources>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="@dimen/width_movie_item"
+    android:layout_height="match_parent"
+    android:layout_marginStart="@dimen/margin_medium_2"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/ivMovieImage"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/height_movie_image"
+        app:srcCompat="@drawable/placeholder_wolverine_image"
+        android:scaleType="centerCrop"/>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvMovieName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ivMovieImage"
+        android:layout_marginTop="@dimen/margin_card_medium_2"
+        android:text="Westworld"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        android:textSize="@dimen/text_regular_2x"/>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvMovieRating"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvMovieName"
+        android:layout_marginTop="@dimen/margin_small"
+        android:text="8.20"
+        android:textColor="@color/white"/>
+
+    <RatingBar
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvMovieName"
+        android:layout_toEndOf="@id/tvMovieRating"
+        android:layout_marginStart="@dimen/margin_medium"
+        android:layout_marginTop="@dimen/margin_small"
+        style="?attr/ratingBarStyleSmall"
+        android:rating="5"
+        android:progressTint="@color/colorAccent"
+        android:numStars="5"/>
+
+</RelativeLayout>
