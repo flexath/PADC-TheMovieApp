@@ -18,7 +18,7 @@
             android:layout_height="match_parent"
             app:title="@string/lbl_discover"
             app:titleCentered="true"
-            app:titleTextColor="@color/white"/>
+            app:titleTextColor="@color/white" />
 
     </com.google.android.material.appbar.AppBarLayout>
 
@@ -40,7 +40,7 @@
                 <androidx.viewpager2.widget.ViewPager2
                     android:id="@+id/viewPagerBanner"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/height_banner"/>
+                    android:layout_height="@dimen/height_banner" />
 
                 <com.tbuonomo.viewpagerdotsindicator.DotsIndicator
                     android:id="@+id/dotsIndicatorBanner"
@@ -48,15 +48,14 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="bottom|center"
                     android:layout_marginBottom="@dimen/margin_medium"
+                    android:elevation="@dimen/margin_small"
                     app:dotsColor="@android:color/darker_gray"
                     app:dotsCornerRadius="@dimen/margin_small"
                     app:dotsSize="@dimen/margin_medium"
                     app:dotsSpacing="@dimen/margin_small"
                     app:dotsWidthFactor="1.0"
-                    android:elevation="@dimen/margin_small"
-                    app:selectedDotColor="@color/colorAccent"
                     app:progressMode="false"
-                    />
+                    app:selectedDotColor="@color/colorAccent" />
 
             </FrameLayout>
 
@@ -65,60 +64,61 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/flBanner"
+                android:layout_marginStart="@dimen/margin_medium_2"
+                android:layout_marginTop="@dimen/margin_medium_3"
                 android:text="@string/lbl_best_popular_films_and_serial"
                 android:textColor="@color/colorSecondaryText"
-                android:textStyle="bold"
-                android:layout_marginStart="@dimen/margin_medium_2"
-                android:layout_marginTop="@dimen/margin_medium_3"/>
+                android:textStyle="bold" />
 
             <include
                 android:id="@+id/vpBestPopularMovieList"
+                layout="@layout/view_pod_movie_list"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/tvBestPopularFilmsAndSerialLabel"
-                android:layout_marginTop="@dimen/margin_medium_2"
-                layout="@layout/view_pod_movie_list"/>
+                android:layout_marginTop="@dimen/margin_medium_2" />
 
             <RelativeLayout
                 android:id="@+id/rlCheckMovieShowTimes"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/height_check_movie_show_time"
                 android:layout_below="@+id/vpBestPopularMovieList"
-                android:background="@color/colorPrimaryLight"
-                android:layout_marginTop="@dimen/margin_medium_3"
                 android:layout_marginStart="@dimen/margin_medium_2"
-                android:layout_marginEnd="@dimen/margin_medium_2">
+                android:layout_marginTop="@dimen/margin_medium_3"
+                android:layout_marginEnd="@dimen/margin_medium_2"
+                android:background="@color/colorPrimaryLight">
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tvCheckMovieShowTimeLabel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/lbl_check_movie_show_time"
-                    android:textSize="@dimen/text_heading_1x"
-                    android:textColor="@color/white"
-                    android:textStyle="bold"
                     android:layout_marginStart="@dimen/margin_medium_3"
-                    android:layout_marginTop="@dimen/margin_medium_3"/>
+                    android:layout_marginTop="@dimen/margin_medium_3"
+                    android:text="@string/lbl_check_movie_show_time"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/text_heading_1x"
+                    android:textStyle="bold" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tvSeeMore"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentBottom="true"
-                    android:text="@string/lbl_see_more"
-                    android:textSize="@dimen/text_regular_3x"
-                    android:textColor="@color/colorAccent"
-                    android:textStyle="bold"
                     android:layout_marginStart="@dimen/margin_medium_3"
-                    android:layout_marginBottom="@dimen/margin_medium_3"/>
+                    android:layout_marginBottom="@dimen/margin_medium_3"
+                    android:text="@string/lbl_see_more"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="@dimen/text_regular_3x"
+                    android:textStyle="bold" />
+
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/ivCheckMovieShowTimeLocation"
                     android:layout_width="@dimen/margin_xxlarge"
                     android:layout_height="@dimen/margin_xxlarge"
-                    app:srcCompat="@drawable/ic_baseline_location_on_white_24dp"
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
-                    android:layout_marginEnd="@dimen/margin_xlarge"/>
+                    android:layout_marginEnd="@dimen/margin_xlarge"
+                    app:srcCompat="@drawable/ic_baseline_location_on_white_24dp" />
 
             </RelativeLayout>
 
@@ -129,12 +129,12 @@
                 android:layout_below="@id/rlCheckMovieShowTimes"
                 android:layout_marginTop="@dimen/margin_large"
                 android:background="@color/colorPrimary"
-                app:tabTextColor="@color/colorSecondaryText"
-                app:tabSelectedTextColor="@color/white"
                 app:tabGravity="center"
-                app:tabIndicatorColor="@color/colorAccent"
                 app:tabIndicatorAnimationMode="elastic"
-                app:tabMode="scrollable"/>
+                app:tabIndicatorColor="@color/colorAccent"
+                app:tabMode="scrollable"
+                app:tabSelectedTextColor="@color/white"
+                app:tabTextColor="@color/colorSecondaryText" />
 
             <FrameLayout
                 android:id="@+id/flMoviesByGenre"
@@ -149,7 +149,7 @@
                     android:id="@+id/vpMoviesByGenre"
                     layout="@layout/view_pod_movie_list"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content" />
 
             </FrameLayout>
 
@@ -158,22 +158,22 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/flMoviesByGenre"
-                android:layout_marginTop="@dimen/margin_medium_3"
                 android:layout_marginStart="@dimen/margin_medium_2"
+                android:layout_marginTop="@dimen/margin_medium_3"
                 android:text="@string/lbl_showcases"
                 android:textColor="@color/colorSecondaryText"
-                android:textStyle="bold"/>
+                android:textStyle="bold" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tvMoreShowCasesLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/margin_medium_2"
                 android:layout_alignBaseline="@+id/tvShowCaseLabel"
                 android:layout_alignParentEnd="true"
+                android:layout_marginEnd="@dimen/margin_medium_2"
                 android:text="@string/lbl_more_showcases"
                 android:textColor="@color/white"
-                android:textStyle="bold"/>
+                android:textStyle="bold" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rvShowCases"
@@ -181,15 +181,16 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/tvShowCaseLabel"
                 android:layout_marginTop="@dimen/margin_card_medium_2"
-                android:paddingEnd="@dimen/margin_medium_2"
-                android:clipToPadding="false"/>
+                android:clipToPadding="false"
+                android:paddingEnd="@dimen/margin_medium_2" />
 
             <include
+                android:id="@+id/vpActorHome"
                 layout="@layout/view_pod_actor_list"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin_medium_3"
-                android:layout_below="@+id/rvShowCases"/>
+                android:layout_below="@+id/rvShowCases"
+                android:layout_marginTop="@dimen/margin_medium_3" />
 
         </RelativeLayout>
 

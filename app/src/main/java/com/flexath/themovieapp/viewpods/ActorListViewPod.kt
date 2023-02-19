@@ -7,6 +7,7 @@ import android.widget.RelativeLayout
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.flexath.themovieapp.adapters.ActorAdapter
+import com.flexath.themovieapp.data.vos.ActorVO
 import kotlinx.android.synthetic.main.view_pod_actor_list.view.*
 
 class ActorListViewPod @JvmOverloads constructor(
@@ -26,6 +27,10 @@ class ActorListViewPod @JvmOverloads constructor(
         tvBestActors.text = titleText
         tvMoreActors.text = moreTitleText
         tvMoreActors.paintFlags = Paint.UNDERLINE_TEXT_FLAG
+    }
+
+    fun setNewData(actorList:List<ActorVO>){
+        mActorAdapter.setData(actorList)
     }
 
     private fun setUpActorRecyclerView() {

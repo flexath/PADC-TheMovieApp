@@ -5,6 +5,7 @@ import android.util.AttributeSet
 import android.widget.FrameLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.flexath.themovieapp.adapters.MovieAdapter
+import com.flexath.themovieapp.data.vos.MovieVO
 import com.flexath.themovieapp.delegates.MovieViewHolderDelegate
 import kotlinx.android.synthetic.main.view_pod_movie_list.view.*
 
@@ -21,12 +22,16 @@ class MovieListViewPod @JvmOverloads constructor(
     }
 
     fun setUpMovieListViewPod(delegate: MovieViewHolderDelegate) {
-        this.mDelegate = delegate
+        setDelegate(delegate)
         setUpMovieRecyclerView()
     }
 
     private fun setDelegate(delegate: MovieViewHolderDelegate) {
         this.mDelegate = delegate
+    }
+
+    fun setNewData(movieList:List<MovieVO>) {
+        mMovieAdapter.setData(movieList)
     }
 
     private fun setUpMovieRecyclerView() {

@@ -13,6 +13,7 @@
     <color name="colorPrimaryLight">#1f2a33</color>
     <color name="colorAccent">#e7b943</color>
     <color name="colorSecondaryText">#535968</color>
+
     <color name="colorTransparentOverlay">#1A000000</color>
     <color name="colorTransparentOverlayPlayButton">#80000000</color>
 </resources>

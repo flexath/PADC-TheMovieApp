@@ -1,5 +1,5 @@
 package com.flexath.themovieapp.delegates
 
 interface BannerViewHolderDelegate {
-    fun onTapMovieFromBanner()
+    fun onTapMovieFromBanner(movieId:Int)
 }

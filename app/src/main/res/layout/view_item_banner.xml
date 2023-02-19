@@ -1,29 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:layout_height="match_parent">
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/ivBannerImage"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:srcCompat="@drawable/placeholder_wolverine_image"
-        android:scaleType="centerCrop"/>
+        android:scaleType="centerCrop"
+        tools:src="@drawable/placeholder_wolverine_image" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tvBannerMovieName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="The Wolverine 2013\nOfficial Review"
-        android:textSize="@dimen/text_heading_1x"
-        android:textColor="@color/white"
-        android:textStyle="bold"
-        android:elevation="@dimen/margin_small"
-        android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
         android:layout_marginStart="@dimen/margin_medium_2"
-        android:layout_marginBottom="@dimen/margin_large"/>
+        android:layout_marginBottom="@dimen/margin_large"
+        android:elevation="@dimen/margin_small"
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_heading_1x"
+        android:textStyle="bold"
+        tools:text="The Wolverine 2013\nOfficial Review" />
 
     <FrameLayout
         android:layout_width="wrap_content"
@@ -31,18 +32,18 @@
         android:layout_centerInParent="true">
 
         <com.google.android.material.button.MaterialButton
+            style="@style/Widget.MaterialComponents.Button.Icon"
             android:layout_width="@dimen/margin_xxlarge"
             android:layout_height="@dimen/margin_xxlarge"
             android:layout_marginBottom="@dimen/margin_xlarge"
             android:backgroundTint="@color/colorAccent"
-            style="@style/Widget.MaterialComponents.Button.Icon"
-            app:icon="@drawable/ic_baseline_play_arrow_black_24dp"
-            app:iconPadding="0dp"
             android:insetLeft="0dp"
+            android:insetTop="0dp"
             android:insetRight="0dp"
             android:insetBottom="0dp"
-            android:insetTop="0dp"
-            app:cornerRadius="@dimen/margin_large"/>
+            app:cornerRadius="@dimen/margin_large"
+            app:icon="@drawable/ic_baseline_play_arrow_black_24dp"
+            app:iconPadding="0dp" />
 
     </FrameLayout>
 
@@ -50,7 +51,7 @@
         android:id="@+id/vGradient"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/gradient_banner"/>
+        android:background="@drawable/gradient_banner" />
 
 
 </RelativeLayout>

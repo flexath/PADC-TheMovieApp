@@ -1,5 +1,5 @@
 package com.flexath.themovieapp.delegates
 
 interface ShowCaseViewHolderDelegate {
-    fun onTapMovieFromShowCase()
+    fun onTapMovieFromShowCase(movieId:Int)
 }
