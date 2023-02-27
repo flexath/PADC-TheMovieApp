@@ -72,7 +72,7 @@ class MovieDetailsActivity : AppCompatActivity() {
 
     private fun bindData(movie: MovieVO) {
         Glide.with(this)
-            .load("$IMAGE_BASE_URL${movie.posterPath}")
+            .load("$IMAGE_BASE_URL${movie.backDropPath}")
             .into(ivPosterMovieDetails)
 
         tvNameMovieDetails.text = movie.title ?: ""

@@ -6,6 +6,7 @@ import com.flexath.themovieapp.data.vos.MovieVO
 import com.flexath.themovieapp.network.responses.*
 import com.flexath.themovieapp.utils.BASE_URL
 import okhttp3.OkHttpClient
+import okhttp3.internal.notifyAll
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

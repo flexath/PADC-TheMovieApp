@@ -24,7 +24,7 @@ class BannerViewHolder(itemView: View,mDelegate: BannerViewHolderDelegate) : Rec
         mMovie = movieResult
 
         Glide.with(itemView.context)
-            .load("$IMAGE_BASE_URL${movieResult.posterPath}")
+            .load("$IMAGE_BASE_URL${movieResult.backDropPath}")
             .into(itemView.ivBannerImage)
 
         itemView.tvBannerMovieName.text = movieResult.title
