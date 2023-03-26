@@ -50,13 +50,13 @@ class MovieDetailsActivity : AppCompatActivity() {
     private fun requestData(movieId: Int) {
         mMovieModel.getMovieDetails(
             movieId = movieId.toString(),
-            onSuccess = {
-                bindData(it)
-            },
             onFailure = {
                 Toast.makeText(this, "Details Section isn't succeeded", Toast.LENGTH_SHORT).show()
+            })?.observe(this) {
+            it?.let {
+                bindData(it)
             }
-        )
+        }
 
         mMovieModel.getCreditByMovie(
             movieId = movieId.toString(),

@@ -76,6 +76,7 @@ object OkHttpDataAgentImpl : MovieDataAgent {
     }
 
     class GetNowPlayingMovieOkHttpTask(private val mOkHttpClient: OkHttpClient) : AsyncTask<Void,Void,MovieListResponse>() {
+        @Deprecated("Deprecated in Java")
         override fun doInBackground(vararg p0: Void?): MovieListResponse? {
             val request = Request.Builder()
                 .url("""$BASE_URL$API_GET_NOW_PLAYING?api_key=$MOVIE_API_KEY&language=en-US&page=1""")
@@ -95,6 +96,7 @@ object OkHttpDataAgentImpl : MovieDataAgent {
             return null
         }
 
+        @Deprecated("Deprecated in Java")
         override fun onPostExecute(result: MovieListResponse?) {
             super.onPostExecute(result)
         }

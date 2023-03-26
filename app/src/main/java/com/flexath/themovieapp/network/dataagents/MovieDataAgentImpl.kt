@@ -73,6 +73,7 @@ object MovieDataAgentImpl : MovieDataAgent {
     }
 
     class GetNowPlayingMovieTask : AsyncTask<Void,Void, MovieListResponse>(){
+        @Deprecated("Deprecated in Java")
         override fun doInBackground(vararg p0: Void?): MovieListResponse? {
             val url:URL
             var reader: BufferedReader? = null
@@ -117,6 +118,7 @@ object MovieDataAgentImpl : MovieDataAgent {
             return null
         }
 
+        @Deprecated("Deprecated in Java")
         override fun onPostExecute(result: MovieListResponse?) {
             super.onPostExecute(result)
         }

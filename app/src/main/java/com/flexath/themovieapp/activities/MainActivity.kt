@@ -3,6 +3,7 @@ package com.flexath.themovieapp.activities
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
+import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -50,31 +51,26 @@ class MainActivity : AppCompatActivity(), BannerViewHolderDelegate, ShowCaseView
 
     private fun requestData() {
         mMovieModel.getNowPlayingMovies(
-            onSuccess = {
-                mBannerAdapter.setData(it)
-            },
             onFailure = {
                 Toast.makeText(this, "Banner Section isn't succeed", Toast.LENGTH_SHORT).show()
-            }
-        )
+            })?.observe(this) {
+            mBannerAdapter.setData(it)
+        }
 
         mMovieModel.getPopularMovies(
-            onSuccess = {
-                mBestPopularMovieListViewPod.setNewData(it)
-            },
             onFailure = {
                 Toast.makeText(this, "Popular Section isn't succeed", Toast.LENGTH_SHORT).show()
-            }
-        )
+            })?.observe(this) {
+            mBestPopularMovieListViewPod.setNewData(it)
+        }
+
 
         mMovieModel.getTopRatedMovies(
-            onSuccess = {
-                mShowCaseAdapter.setNewData(it)
-            },
             onFailure = {
                 Toast.makeText(this, "TopRated Section isn't succeed", Toast.LENGTH_SHORT).show()
-            }
-        )
+            })?.observe(this) {
+            mShowCaseAdapter.setNewData(it)
+        }
 
         mMovieModel.getGenres(
             onSuccess = {
@@ -125,6 +121,9 @@ class MainActivity : AppCompatActivity(), BannerViewHolderDelegate, ShowCaseView
     }
 
     private fun setUpListeners() {
+
+
+
         // Genre Tab Layout
         tabLayoutGenre.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab?) {
@@ -170,11 +169,23 @@ class MainActivity : AppCompatActivity(), BannerViewHolderDelegate, ShowCaseView
         setSupportActionBar(toolBar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_menu)
+
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu_discover, menu)
         return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when(item.itemId) {
+            R.id.btnSearch -> {
+                startActivity(MovieSearchActivity.newIntent(this))
+                return true
+            }
+            else -> false
+        }
     }
 
     override fun onTapMovieFromBanner(movieId: Int) {
