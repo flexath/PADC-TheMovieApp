@@ -6,7 +6,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.flexath.themovieapp.R
@@ -20,7 +19,7 @@ import com.flexath.themovieapp.utils.IMAGE_BASE_URL
 import com.flexath.themovieapp.viewpods.ActorListViewPod
 import kotlinx.android.synthetic.main.activity_movie_details.*
 
-class MovieDetailsActivity : AppCompatActivity(),MovieDetailsView {
+class MovieDetailsActivity : BaseActivity(),MovieDetailsView {
 
     // ViewPods
     private lateinit var actorsViewPod: ActorListViewPod
