@@ -1,17 +1,17 @@
 package com.flexath.themovieapp.activities
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.flexath.themovieapp.R
-import com.flexath.themovieapp.data.models.MovieModel
-import com.flexath.themovieapp.data.models.MovieModelImpl
 import com.flexath.themovieapp.data.vos.GenreVO
 import com.flexath.themovieapp.data.vos.MovieVO
+import com.flexath.themovieapp.mvvm.MovieDetailsModel
 import com.flexath.themovieapp.utils.IMAGE_BASE_URL
 import com.flexath.themovieapp.viewpods.ActorListViewPod
 import kotlinx.android.synthetic.main.activity_movie_details.*
@@ -22,7 +22,7 @@ class MovieDetailsActivity : AppCompatActivity() {
     private lateinit var actorsViewPod: ActorListViewPod
     private lateinit var creatorsViewPod: ActorListViewPod
 
-    private val mMovieModel: MovieModel = MovieModelImpl
+    private lateinit var mViewModel: MovieDetailsModel
 
     companion object {
         private const val EXTRA_MOVIE_ID = "EXTRA_MOVIE_ID"
@@ -38,38 +38,42 @@ class MovieDetailsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_movie_details)
 
-        setUpViewPods()
-        setUpListeners()
-
         val movieId = intent?.getIntExtra(EXTRA_MOVIE_ID, 0)
         movieId?.let {
-            requestData(it)
+            setUpViewModel(it)
         }
+
+        setUpViewPods()
+        setUpListeners()
+        observeLiveData()
     }
 
-    private fun requestData(movieId: Int) {
-        mMovieModel.getMovieDetails(
-            movieId = movieId.toString(),
-            onFailure = {
-                Toast.makeText(this, "Details Section isn't succeeded", Toast.LENGTH_SHORT).show()
-            })?.observe(this) {
+    private fun setUpViewModel(movieId:Int) {
+        mViewModel = ViewModelProvider(this)[MovieDetailsModel::class.java]
+        mViewModel.getInitialDetailsData(movieId)
+    }
+
+    private fun observeLiveData() {
+        mViewModel.movieDetailsLiveData?.observe(this) {
             it?.let {
-                bindData(it)
+               bindData(it)
             }
         }
 
-        mMovieModel.getCreditByMovie(
-            movieId = movieId.toString(),
-            onSuccess = {
-                actorsViewPod.setNewData(it.first)
-                creatorsViewPod.setNewData(it.second)
-            },
-            onFailure = {
-                Toast.makeText(this, "Details Section isn't succeeded", Toast.LENGTH_SHORT).show()
+        mViewModel.castLiveData.observe(this) {
+            it?.let {
+                actorsViewPod.setNewData(it)
             }
-        )
+        }
+
+        mViewModel.crewLiveData.observe(this) {
+            it?.let {
+                creatorsViewPod.setNewData(it)
+            }
+        }
     }
 
+    @SuppressLint("SetTextI18n")
     private fun bindData(movie: MovieVO) {
         Glide.with(this)
             .load("$IMAGE_BASE_URL${movie.backDropPath}")
@@ -108,7 +112,7 @@ class MovieDetailsActivity : AppCompatActivity() {
 
     private fun setUpListeners() {
         btnBack.setOnClickListener {
-            super.onBackPressed()
+            finish()
         }
     }
 
