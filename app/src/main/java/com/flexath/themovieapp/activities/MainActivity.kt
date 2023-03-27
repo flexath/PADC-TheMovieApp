@@ -1,44 +1,43 @@
 package com.flexath.themovieapp.activities
 
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.flexath.themovieapp.R
 import com.flexath.themovieapp.adapters.BannerAdapter
 import com.flexath.themovieapp.adapters.ShowCaseAdapter
-import com.flexath.themovieapp.data.models.MovieModel
-import com.flexath.themovieapp.data.models.MovieModelImpl
+import com.flexath.themovieapp.data.vos.ActorVO
 import com.flexath.themovieapp.data.vos.GenreVO
-import com.flexath.themovieapp.delegates.BannerViewHolderDelegate
-import com.flexath.themovieapp.delegates.MovieViewHolderDelegate
-import com.flexath.themovieapp.delegates.ShowCaseViewHolderDelegate
+import com.flexath.themovieapp.data.vos.MovieVO
+import com.flexath.themovieapp.mvp.presenters.MainPresenter
+import com.flexath.themovieapp.mvp.presenters.MainPresenterImpl
+import com.flexath.themovieapp.mvp.views.MainView
 import com.flexath.themovieapp.viewpods.ActorListViewPod
 import com.flexath.themovieapp.viewpods.MovieListViewPod
-import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayout
 import kotlinx.android.synthetic.main.activity_main.*
 
 
-class MainActivity : AppCompatActivity(), BannerViewHolderDelegate, ShowCaseViewHolderDelegate,
-    MovieViewHolderDelegate {
+class MainActivity : AppCompatActivity(), MainView{
 
     private lateinit var mBannerAdapter: BannerAdapter
     private lateinit var mShowCaseAdapter: ShowCaseAdapter
 
     private lateinit var mBestPopularMovieListViewPod: MovieListViewPod
-    private lateinit var mMoviesByGenerViewPod: MovieListViewPod
+    private lateinit var mMoviesByGenreViewPod: MovieListViewPod
     private lateinit var mActorViewPod: ActorListViewPod
 
-    private var mMovieModel: MovieModel = MovieModelImpl
-    private var mGenres: List<GenreVO>? = null
+    private lateinit var mPresenter:MainPresenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        setUpPresenter()
 
         setUpToolBar()
         setUpViewPodsInstances()          // For best popular films and serial & genre movies
@@ -46,101 +45,34 @@ class MainActivity : AppCompatActivity(), BannerViewHolderDelegate, ShowCaseView
         setUpShowCaseRecyclerView()       // For showcase
         setUpListeners()                 // For Genre Tab Layout
 
-        requestData()
+        mPresenter.onUIReady(this)
     }
 
-    private fun requestData() {
-        mMovieModel.getNowPlayingMovies(
-            onFailure = {
-                Toast.makeText(this, "Banner Section isn't succeed", Toast.LENGTH_SHORT).show()
-            })?.observe(this) {
-            mBannerAdapter.setData(it)
-        }
-
-        mMovieModel.getPopularMovies(
-            onFailure = {
-                Toast.makeText(this, "Popular Section isn't succeed", Toast.LENGTH_SHORT).show()
-            })?.observe(this) {
-            mBestPopularMovieListViewPod.setNewData(it)
-        }
-
-
-        mMovieModel.getTopRatedMovies(
-            onFailure = {
-                Toast.makeText(this, "TopRated Section isn't succeed", Toast.LENGTH_SHORT).show()
-            })?.observe(this) {
-            mShowCaseAdapter.setNewData(it)
-        }
-
-        mMovieModel.getGenres(
-            onSuccess = {
-                mGenres = it
-                setUpGenreTabLayout(it)
-
-                it.firstOrNull()?.id?.let { genreId ->
-                    getMoviesByGenre(genreId)
-                }
-            },
-            onFailure = {
-                Toast.makeText(this, "Genre Section isn't succeed", Toast.LENGTH_SHORT).show()
-            }
-        )
-
-        mMovieModel.getActors(
-            onSuccess = {
-                mActorViewPod.setNewData(it)
-            },
-            onFailure = {
-                Toast.makeText(this, "Actor Section isn't succeed", Toast.LENGTH_SHORT).show()
-            }
-        )
+    private fun setUpPresenter() {
+        mPresenter = ViewModelProvider(this)[MainPresenterImpl::class.java]
+        mPresenter.initView(this)
     }
-
-    private fun getMoviesByGenre(genreId: Int) {
-        mMovieModel.getMoviesByGenre(
-            genreId = genreId.toString(),
-            onSuccess = {
-                mMoviesByGenerViewPod.setNewData(it)
-            },
-            onFailure = {
-                Toast.makeText(this, "MovieByGenre Section isn't succeed", Toast.LENGTH_SHORT)
-                    .show()
-            }
-        )
-    }
-
 
     private fun setUpViewPodsInstances() {
         mBestPopularMovieListViewPod = vpBestPopularMovieList as MovieListViewPod
-        mBestPopularMovieListViewPod.setUpMovieListViewPod(this)
+        mBestPopularMovieListViewPod.setUpMovieListViewPod(mPresenter)
 
-        mMoviesByGenerViewPod = vpMoviesByGenre as MovieListViewPod
-        mMoviesByGenerViewPod.setUpMovieListViewPod(this)
+        mMoviesByGenreViewPod = vpMoviesByGenre as MovieListViewPod
+        mMoviesByGenreViewPod.setUpMovieListViewPod(mPresenter)
 
         mActorViewPod = vpActorHome as ActorListViewPod
     }
 
     private fun setUpListeners() {
 
-
-
         // Genre Tab Layout
         tabLayoutGenre.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab?) {
-                Log.i("TabActivity", tab?.position.toString())
-                mGenres?.get(tab?.position ?: 0)?.id?.let {
-                    getMoviesByGenre(it)
-                }
+                mPresenter.onTapGenre(tab?.position ?: 0)
             }
 
-            override fun onTabUnselected(tab: TabLayout.Tab?) {
-
-            }
-
-            override fun onTabReselected(tab: TabLayout.Tab?) {
-
-            }
-
+            override fun onTabUnselected(tab: TabLayout.Tab?) {}
+            override fun onTabReselected(tab: TabLayout.Tab?) {}
         })
     }
 
@@ -154,13 +86,13 @@ class MainActivity : AppCompatActivity(), BannerViewHolderDelegate, ShowCaseView
     }
 
     private fun setUpShowCaseRecyclerView() {
-        mShowCaseAdapter = ShowCaseAdapter(this)
+        mShowCaseAdapter = ShowCaseAdapter(mPresenter)
         rvShowCases.adapter = mShowCaseAdapter
         rvShowCases.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
     }
 
     private fun setUpBannerViewPager() {
-        mBannerAdapter = BannerAdapter(this)
+        mBannerAdapter = BannerAdapter(mPresenter)
         viewPagerBanner.adapter = mBannerAdapter
         dotsIndicatorBanner.attachTo(viewPagerBanner)
     }
@@ -169,8 +101,6 @@ class MainActivity : AppCompatActivity(), BannerViewHolderDelegate, ShowCaseView
         setSupportActionBar(toolBar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_menu)
-
-
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -188,22 +118,35 @@ class MainActivity : AppCompatActivity(), BannerViewHolderDelegate, ShowCaseView
         }
     }
 
-    override fun onTapMovieFromBanner(movieId: Int) {
-        startActivity(MovieDetailsActivity.newIntent(this, movieId))
-        Snackbar.make(window.decorView, "Tapped Movie From Banner", Snackbar.LENGTH_LONG).show()
+    override fun showNowPlayingMovies(movieList: List<MovieVO>) {
+        mBannerAdapter.setData(movieList)
     }
 
-    override fun onTapMovieFromShowCase(movieId: Int) {
-        startActivity(MovieDetailsActivity.newIntent(this, movieId))
-        Snackbar.make(window.decorView, "Tapped Movie From ShowCase", Snackbar.LENGTH_LONG).show()
+    override fun showPopularMovies(movieList: List<MovieVO>) {
+        mBestPopularMovieListViewPod.setNewData(movieList)
     }
 
-    override fun onTapMovie(movieId: Int) {
+    override fun showTopRatedMovies(movieList: List<MovieVO>) {
+        mShowCaseAdapter.setNewData(movieList)
+    }
+
+    override fun showMoviesByGenre(movieList: List<MovieVO>) {
+        mMoviesByGenreViewPod.setNewData(movieList)
+    }
+
+    override fun showGenres(genreList: List<GenreVO>) {
+        setUpGenreTabLayout(genreList)
+    }
+
+    override fun showActors(actorList: List<ActorVO>) {
+        mActorViewPod.setNewData(actorList)
+    }
+
+    override fun navigateToMovieDetailScreen(movieId: Int) {
         startActivity(MovieDetailsActivity.newIntent(this, movieId))
-        Snackbar.make(
-            window.decorView,
-            "Tapped Movie From Best Popular Movies or Movies by Genre",
-            Snackbar.LENGTH_LONG
-        ).show()
+    }
+
+    override fun showError(error: String) {
+        Toast.makeText(this,error,Toast.LENGTH_SHORT).show()
     }
 }
