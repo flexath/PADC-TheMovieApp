@@ -15,6 +15,8 @@ import com.flexath.themovieapp.data.vos.MovieVO
 import com.flexath.themovieapp.mvp.presenters.MainPresenter
 import com.flexath.themovieapp.mvp.presenters.MainPresenterImpl
 import com.flexath.themovieapp.mvp.views.MainView
+import com.flexath.themovieapp.routers.navigateToMovieDetailsActivity
+import com.flexath.themovieapp.routers.navigateToMovieSearchActivity
 import com.flexath.themovieapp.viewpods.ActorListViewPod
 import com.flexath.themovieapp.viewpods.MovieListViewPod
 import com.google.android.material.tabs.TabLayout
@@ -110,7 +112,7 @@ class MainActivity : BaseActivity(), MainView{
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when(item.itemId) {
             R.id.btnSearch -> {
-                startActivity(MovieSearchActivity.newIntent(this))
+                navigateToMovieSearchActivity()
                 return true
             }
             else -> false
@@ -142,7 +144,7 @@ class MainActivity : BaseActivity(), MainView{
     }
 
     override fun navigateToMovieDetailScreen(movieId: Int) {
-        startActivity(MovieDetailsActivity.newIntent(this, movieId))
+        navigateToMovieDetailsActivity(movieId)
     }
 
     override fun showError(error: String) {

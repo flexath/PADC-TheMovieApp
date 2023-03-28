@@ -2,14 +2,16 @@ package com.flexath.themovieapp.mvp.presenters
 
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.ViewModel
-import com.flexath.themovieapp.data.models.MovieModel
-import com.flexath.themovieapp.data.models.MovieModelImpl
+import com.flexath.themovieapp.interactors.MovieInteractor
+import com.flexath.themovieapp.interactors.MovieInteractorImpl
 import com.flexath.themovieapp.mvp.views.MovieDetailsView
 
 class MovieDetailPresenterImpl : ViewModel(), MovieDetailPresenter {
 
     private var mViewDetail:MovieDetailsView? = null
-    private var mMovieModel:MovieModel = MovieModelImpl
+
+    // Interactor
+    private var mMovieInteractor: MovieInteractor = MovieInteractorImpl
 
     override fun initView(view: MovieDetailsView) {
         mViewDetail = view
@@ -18,7 +20,7 @@ class MovieDetailPresenterImpl : ViewModel(), MovieDetailPresenter {
     override fun onUIReady(owner: LifecycleOwner) {}
 
     override fun onUIReadyInMovieDetails(owner: LifecycleOwner, movieId: Int) {
-        mMovieModel.getMovieDetails(movieId = movieId.toString(),
+        mMovieInteractor.getMovieDetails(movieId = movieId.toString(),
         onFailure = {
             mViewDetail?.showError(it)
         })?.observe(owner){ movie ->
@@ -27,7 +29,7 @@ class MovieDetailPresenterImpl : ViewModel(), MovieDetailPresenter {
             }
         }
 
-        mMovieModel.getCreditByMovie(movieId = movieId.toString(),
+        mMovieInteractor.getCreditByMovie(movieId = movieId.toString(),
         onSuccess = {
             mViewDetail?.showCreditsByMovie(it.first,it.second)
         },
