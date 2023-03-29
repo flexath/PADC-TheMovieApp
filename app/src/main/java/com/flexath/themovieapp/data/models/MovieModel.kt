@@ -49,4 +49,15 @@ interface MovieModel {
     fun searchMovie(
         query:String
     ) : Observable<List<MovieVO>>
+
+    // Reactive Streams only
+
+    fun getNowPlayingMoviesObservable() : Observable<List<MovieVO>>?
+    fun getPopularMoviesObservable() : Observable<List<MovieVO>>?
+    fun getTopRatedMoviesObservable() : Observable<List<MovieVO>>?
+    fun getGenresObservable() : Observable<List<GenreVO>>?
+    fun getMoviesByGenreObservable(genreId:String) : Observable<List<MovieVO>>?
+    fun getActorsObservable() : Observable<List<ActorVO>>?
+    fun getMovieDetailsObservable(movieId:String) : Observable<MovieVO?>?
+    fun getCreditByMovieObservable(movieId:String) : Observable<Pair<List<ActorVO>,List<ActorVO>>>
 }

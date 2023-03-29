@@ -77,4 +77,10 @@ dependencies {
 
     // ViewModel
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1"
+
+    // Rx + Room
+    implementation("androidx.room:room-rxjava3:$room_version")
+
+    // Rx + LiveData For Flowable
+    implementation("androidx.lifecycle:lifecycle-reactivestreams-ktx:2.5.1")
 }
